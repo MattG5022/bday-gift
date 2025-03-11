@@ -97,7 +97,7 @@
             display: none;
             position: absolute;
             bottom: 15px;
-            background: #ff0000; /* Red */
+            background: #ff0000;
             color: #fff;
             padding: 8px 15px;
             border-radius: 20px;
@@ -116,7 +116,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #ff0000; /* Red */
+            border-top: 4px solid #ff0000;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -129,7 +129,7 @@
         }
 
         h1 {
-            color: #ff0000; /* Red */
+            color: #ff0000;
             font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 10px;
@@ -146,7 +146,7 @@
         }
 
         h2 {
-            color: #ffff00; /* Yellow */
+            color: #ffff00;
             font-size: 1.4rem;
             font-weight: 600;
             margin: 15px 0;
@@ -176,7 +176,7 @@
 
         .progress {
             height: 100%;
-            background: #003087; /* Blue */
+            background: #003087;
             width: 0;
             transition: width 0.5s ease;
         }
@@ -205,19 +205,19 @@
         }
 
         .gift-container:hover, .gift-container:active {
-            box-shadow: 0 0 15px rgba(0, 48, 135, 0.7); /* Blue glow */
+            box-shadow: 0 0 15px rgba(0, 48, 135, 0.7);
         }
 
         .swipe-hint {
             position: absolute;
-            bottom: 8px;
+            top: 8px;
             right: 8px;
-            background: #ffff00; /* Yellow */
+            background: #ffff00;
             color: #333;
             padding: 4px 8px;
             border-radius: 15px;
             font-size: 0.8rem;
-            opacity: 0.8;
+            opacity: 0.7;
         }
 
         .gift-item {
@@ -263,7 +263,7 @@
         body.light-mode .gift-text { color: #333; }
 
         .gift-text h3 {
-            color: #ffff00; /* Yellow */
+            color: #ffff00;
             font-size: 1.2rem;
             margin-bottom: 8px;
             font-weight: 600;
@@ -287,13 +287,13 @@
         }
 
         .swipe-dot.active {
-            background: #003087; /* Blue */
+            background: #003087;
         }
 
         .button {
             display: inline-block;
             padding: 10px 20px;
-            background: #003087; /* Blue */
+            background: #003087;
             color: #fff;
             font-size: 0.9rem;
             font-weight: 600;
@@ -316,6 +316,8 @@
         #startButton {
             display: none;
             animation: pulse 1.5s infinite;
+            margin: 0 auto;
+            display: block;
         }
 
         @keyframes pulse {
@@ -380,7 +382,7 @@
         }
 
         .qr-code h3 {
-            color: #ffff00; /* Yellow */
+            color: #ffff00;
             font-size: 1.1rem;
             margin-bottom: 8px;
         }
@@ -401,20 +403,20 @@
         .audio-controls {
             position: fixed;
             bottom: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 8px;
+            left: 10px; /* Moved to bottom-left */
+            background: rgba(0, 0, 0, 0.6);
+            padding: 6px;
             border-radius: 10px;
             display: none;
             opacity: 0;
             transition: opacity 0.5s ease;
-            z-index: 100;
+            z-index: 110; /* Higher than content */
         }
 
-        body.light-mode .audio-controls { background: rgba(255, 255, 255, 0.8); }
+        body.light-mode .audio-controls { background: rgba(255, 255, 255, 0.6); }
 
         .audio-button {
-            background: #003087; /* Blue */
+            background: #003087;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -422,6 +424,7 @@
             cursor: pointer;
             font-size: 0.8rem;
             transition: background 0.3s ease;
+            touch-action: manipulation;
         }
 
         body.light-mode .audio-button { background: #002060; }
@@ -432,7 +435,7 @@
 
         .volume-slider {
             width: 70px;
-            accent-color: #ff0000; /* Red */
+            accent-color: #ff0000;
             vertical-align: middle;
         }
 
@@ -446,37 +449,97 @@
             z-index: 999;
         }
 
-        .theme-toggle, .fullscreen-toggle {
+        /* Toggle Switch Styling */
+        .toggle-container {
             position: fixed;
-            top: 10px;
-            background: #003087; /* Blue */
-            color: #fff;
-            border: none;
-            border-radius: 20px;
-            padding: 8px 15px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            z-index: 100;
+            z-index: 110; /* Higher than content */
         }
 
-        .theme-toggle { right: 60px; }
-        .fullscreen-toggle { right: 10px; }
+        .toggle-container input[type="checkbox"] {
+            display: none;
+        }
 
-        body.light-mode .theme-toggle, body.light-mode .fullscreen-toggle { background: #002060; }
+        .toggle-container label {
+            display: block;
+            width: 40px;
+            height: 20px;
+            background: #555;
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            touch-action: manipulation;
+        }
+
+        .toggle-container label::after {
+            content: '🌙'; /* Default: Moon for dark mode */
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #333; /* Dark icon for contrast */
+            transition: transform 0.3s ease, content 0s;
+        }
+
+        body.light-mode .toggle-container label::after {
+            background: #ddd;
+            color: #fff; /* White icon in light mode */
+        }
+
+        .toggle-container input:checked + label {
+            background: #003087;
+        }
+
+        .toggle-container input:checked + label::after {
+            transform: translateX(20px);
+        }
+
+        .theme-toggle input:checked + label::after {
+            content: '☀️'; /* Sun for light mode */
+        }
+
+        .fullscreen-toggle label::after {
+            content: '↔'; /* Expand for fullscreen off */
+        }
+
+        .fullscreen-toggle input:checked + label::after {
+            content: '↕'; /* Shrink for fullscreen on */
+        }
+
+        .theme-toggle { top: 10px; right: 10px; }
+        .fullscreen-toggle { top: 40px; right: 10px; }
 
         @media (max-width: 768px) {
-            h1 { font-size: 1.6rem; }
+            h1 { font-size: 1.5rem; } /* Slightly smaller for mobile */
             h2 { font-size: 1.2rem; }
-            p.subtitle { font-size: 0.9rem; }
+            p.subtitle { font-size: 0.85rem; }
             .gift-item { max-width: 280px; height: 160px; }
-            .gift-text { font-size: 0.85rem; }
-            .gift-text h3 { font-size: 1.1rem; }
-            .button { padding: 8px 18px; font-size: 0.85rem; }
+            .gift-text { font-size: 0.8rem; }
+            .gift-text h3 { font-size: 1rem; }
+            .button { padding: 8px 16px; font-size: 0.8rem; }
             .qr-code { max-width: 220px; }
-            .qr-code h3 { font-size: 1rem; }
+            .qr-code h3 { font-size: 0.9rem; }
             .qr-code img { max-width: 100px; }
             #game .gift-item { max-width: 100%; }
-            #countdown { font-size: 1rem; }
+            #countdown { font-size: 0.9rem; padding: 8px; }
+            .swipe-hint { font-size: 0.7rem; padding: 3px 6px; }
+            .swipe-progress { gap: 6px; }
+            .swipe-dot { width: 6px; height: 6px; }
+            .theme-toggle { top: 10px; right: 10px; }
+            .fullscreen-toggle { top: 32px; right: 10px; } /* Adjusted spacing */
+            .toggle-container label { width: 36px; height: 18px; }
+            .toggle-container label::after { width: 14px; height: 14px; top: 2px; left: 2px; font-size: 10px; }
+            .toggle-container input:checked + label::after { transform: translateX(18px); }
+            .audio-controls { padding: 4px; }
+            .audio-button { padding: 4px 8px; font-size: 0.7rem; }
+            .volume-slider { width: 60px; }
         }
 
         @media (min-width: 769px) {
@@ -497,8 +560,14 @@
     </div>
     <canvas id="particle-canvas"></canvas>
     <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
-    <button class="theme-toggle" id="themeToggle">Light Mode</button>
-    <button class="fullscreen-toggle" id="fullscreenToggle">Fullscreen</button>
+    <div class="toggle-container theme-toggle">
+        <input type="checkbox" id="themeToggle">
+        <label for="themeToggle"></label>
+    </div>
+    <div class="toggle-container fullscreen-toggle">
+        <input type="checkbox" id="fullscreenToggle">
+        <label for="fullscreenToggle"></label>
+    </div>
     <div class="container">
         <h1 id="greeting">🎉 Happy Birthday, Dad! 🎉</h1>
         <p class="subtitle">A special adventure awaits you...</p>
@@ -603,7 +672,7 @@
 
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
-            particleCanvas.style.transform = `translateY(${scrollY * 0.3}px)`; // Parallax effect
+            particleCanvas.style.transform = `translateY(${scrollY * 0.3}px)`;
         });
 
         class Particle {
@@ -631,7 +700,8 @@
 
         function initParticles() {
             particlesArray = [];
-            const numberOfParticles = Math.min((particleCanvas.width * particleCanvas.height) / 10000, 60);
+            const isMobile = window.innerWidth <= 768;
+            const numberOfParticles = Math.min((particleCanvas.width * particleCanvas.height) / 10000, isMobile ? 40 : 60);
             for (let i = 0; i < numberOfParticles; i++) {
                 particlesArray.push(new Particle());
             }
@@ -814,7 +884,7 @@
                     backgroundMusic.volume = volumeSlider.value;
                     backgroundMusic.play();
                     musicPlaying = true;
-                    audioControls.style.display = 'block';
+                    audioControls.style.display = 'flex';
                     setTimeout(() => audioControls.style.opacity = 1, 500);
                 }
             } else {
@@ -850,12 +920,12 @@
                 const deltaX = e.changedTouches[0].clientX - startX;
                 if (isSwiping && deltaX > 50) {
                     handleGiftAdvance(element);
-                    if (navigator.vibrate) navigator.vibrate(50); // Vibration feedback
+                    if (navigator.vibrate) navigator.vibrate(50);
                 }
             });
             element.addEventListener('click', () => {
                 handleGiftAdvance(element);
-                if (navigator.vibrate) navigator.vibrate(50); // Vibration feedback
+                if (navigator.vibrate) navigator.vibrate(50);
             });
         }
 
@@ -884,25 +954,20 @@
             }
         });
 
-        themeToggle.addEventListener('click', () => {
+        themeToggle.addEventListener('change', () => {
             document.body.classList.toggle('light-mode');
-            themeToggle.textContent = document.body.classList.contains('light-mode') ? 'Dark Mode' : 'Light Mode';
         });
 
-        fullscreenToggle.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().then(() => {
-                    fullscreenToggle.textContent = 'Exit Fullscreen';
-                }).catch(err => console.log('Fullscreen failed:', err));
+        fullscreenToggle.addEventListener('change', () => {
+            if (fullscreenToggle.checked) {
+                document.documentElement.requestFullscreen().catch(err => console.log('Fullscreen failed:', err));
             } else {
-                document.exitFullscreen().then(() => {
-                    fullscreenToggle.textContent = 'Fullscreen';
-                }).catch(err => console.log('Exit fullscreen failed:', err));
+                document.exitFullscreen().catch(err => console.log('Exit fullscreen failed:', err));
             }
         });
 
         function startCountdown() {
-            const matchDate = new Date('2025-05-31T19:05:00+10:00'); // May 31, 2025, 7:05 PM AEST
+            const matchDate = new Date('2025-05-31T19:05:00+10:00');
             function updateCountdown() {
                 const now = new Date();
                 const diff = matchDate - now;
