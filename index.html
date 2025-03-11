@@ -18,7 +18,7 @@
             text-align: center;
             background: linear-gradient(135deg, #1a1a1a, #2b2b2b);
             min-height: 100vh;
-            overflow-y: auto;
+            overflow-y: scroll; /* Enable scrolling */
             position: relative;
             padding: 15px;
         }
@@ -47,6 +47,7 @@
             display: none;
             margin: 0 auto;
             animation: slideUp 1s ease-out forwards;
+            min-height: calc(100vh - 30px); /* Ensure container takes up space */
         }
 
         @keyframes slideUp {
@@ -558,6 +559,35 @@
         const sydneyButton = document.getElementById('sydneyActivities');
         const sydneyInfo = document.getElementById('sydneyInfo');
         let musicPlaying = false;
+
+        // Tap-to-skip video feature
+        let tapCount = 0;
+        let lastTapTime = 0;
+        const TAP_THRESHOLD = 1000; // 1 second between taps
+        const REQUIRED_TAPS = 5;
+
+        videoOverlay.addEventListener('click', (e) => {
+            const currentTime = Date.now();
+
+            if (currentTime - lastTapTime <= TAP_THRESHOLD) {
+                tapCount++;
+            } else {
+                tapCount = 1; // Reset if taps are too far apart
+            }
+
+            lastTapTime = currentTime;
+
+            if (tapCount >= REQUIRED_TAPS) {
+                introVideo.pause();
+                videoOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    videoOverlay.style.display = 'none';
+                    container.style.display = 'block';
+                    setTimeout(() => startButton.style.display = 'block', 1000);
+                }, 500);
+                tapCount = 0; // Reset tap count after skipping
+            }
+        });
 
         introVideo.volume = 0.5;
         introVideo.play().catch(() => {
