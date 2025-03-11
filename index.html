@@ -11,7 +11,44 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /* Add this CSS for the Tex Walker video overlay */
+#tex-video-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+}
 
+#tex-video {
+    width: 90%;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+#close-tex-video {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #ff0000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+#close-tex-video:hover {
+    background: #cc0000;
+}
         html {
             scroll-behavior: smooth;
         }
@@ -618,6 +655,16 @@
         <div id="linksSection">
             <h2>🔗 Your Trip Essentials</h2>
             <div id="countdown">Counting down to the match...</div>
+             <button id="texWalkerButton" class="button">Click here to watch a personalised message from Tex Walker</button>
+
+    <!-- Add this video overlay for the Tex Walker video -->
+    <div id="tex-video-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 10000; justify-content: center; align-items: center;">
+        <video id="tex-video" controls style="width: 90%; max-width: 800px;">
+            <source src="tex.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <button id="close-tex-video" class="button" style="position: absolute; top: 20px; right: 20px;">Close</button>
+    </div>
             <div class="qr-codes-container">
                 <div class="qr-code">
                     <h3>📅 AFL Match Info</h3>
@@ -792,6 +839,30 @@
         const countdown = document.getElementById('countdown');
         const greeting = document.getElementById('greeting');
         let musicPlaying = false;
+        // Add this JavaScript to handle the Tex Walker video
+const texWalkerButton = document.getElementById('texWalkerButton');
+const texVideoOverlay = document.getElementById('tex-video-overlay');
+const texVideo = document.getElementById('tex-video');
+const closeTexVideoButton = document.getElementById('close-tex-video');
+
+texWalkerButton.addEventListener('click', () => {
+    texVideoOverlay.style.display = 'flex';
+    texVideo.play();
+});
+
+closeTexVideoButton.addEventListener('click', () => {
+    texVideo.pause();
+    texVideo.currentTime = 0; // Reset video to start
+    texVideoOverlay.style.display = 'none';
+});
+
+texVideoOverlay.addEventListener('click', (e) => {
+    if (e.target === texVideoOverlay) {
+        texVideo.pause();
+        texVideo.currentTime = 0; // Reset video to start
+        texVideoOverlay.style.display = 'none';
+    }
+});
 
         // Dynamic Greeting
         function updateGreeting() {
